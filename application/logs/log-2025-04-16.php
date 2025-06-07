@@ -1,0 +1,32 @@
+<?php defined('BASEPATH') OR exit('No direct script access allowed'); ?>
+
+ERROR - 2025-04-16 23:29:21 --> 404 Page Not Found: Actuator/env
+ERROR - 2025-04-16 23:29:21 --> 404 Page Not Found: Server/index
+ERROR - 2025-04-16 23:29:21 --> 404 Page Not Found: Vscode/sftp.json
+ERROR - 2025-04-16 23:29:22 --> 404 Page Not Found: About/index
+ERROR - 2025-04-16 23:29:22 --> 404 Page Not Found: Debug/default
+ERROR - 2025-04-16 23:29:23 --> 404 Page Not Found: V2/_catalog
+ERROR - 2025-04-16 23:29:23 --> 404 Page Not Found: Ecp/Current
+ERROR - 2025-04-16 23:29:24 --> 404 Page Not Found: Actuator/env
+ERROR - 2025-04-16 23:29:24 --> 404 Page Not Found: Loginaction/index
+ERROR - 2025-04-16 23:29:24 --> 404 Page Not Found: _all_dbs/index
+ERROR - 2025-04-16 23:29:25 --> 404 Page Not Found: Server/index
+ERROR - 2025-04-16 23:29:25 --> 404 Page Not Found: Gitignore/.DS_Store
+ERROR - 2025-04-16 23:29:26 --> 404 Page Not Found: Vscode/sftp.json
+ERROR - 2025-04-16 23:29:26 --> 404 Page Not Found: About/index
+ERROR - 2025-04-16 23:29:26 --> 404 Page Not Found: Assets/.DS_Store
+ERROR - 2025-04-16 23:29:27 --> 404 Page Not Found: Debug/default
+ERROR - 2025-04-16 23:29:27 --> 404 Page Not Found: V2/_catalog
+ERROR - 2025-04-16 23:29:28 --> 404 Page Not Found: Env/index
+ERROR - 2025-04-16 23:29:28 --> 404 Page Not Found: Ecp/Current
+ERROR - 2025-04-16 23:29:29 --> 404 Page Not Found: Configjson/index
+ERROR - 2025-04-16 23:29:29 --> 404 Page Not Found: Loginaction/index
+ERROR - 2025-04-16 23:29:29 --> 404 Page Not Found: Telescope/requests
+ERROR - 2025-04-16 23:29:30 --> 404 Page Not Found: Infophp/index
+ERROR - 2025-04-16 23:29:30 --> 404 Page Not Found: _all_dbs/index
+ERROR - 2025-04-16 23:29:32 --> 404 Page Not Found: Gitignore/.DS_Store
+ERROR - 2025-04-16 23:29:33 --> 404 Page Not Found: Assets/.DS_Store
+ERROR - 2025-04-16 23:29:36 --> 404 Page Not Found: Env/index
+ERROR - 2025-04-16 23:29:38 --> 404 Page Not Found: Configjson/index
+ERROR - 2025-04-16 23:29:38 --> 404 Page Not Found: Telescope/requests
+ERROR - 2025-04-16 23:29:39 --> 404 Page Not Found: Infophp/index
