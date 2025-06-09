@@ -85,7 +85,7 @@
                                   data-bs-target="#approveLeave<?php echo $value->emp_leave_id; ?>"
                                   class="btn btn-sm waves-effect waves-light holiday"
                                   style="color:green">
-                                  <i class="fa fa-check"></i> Approve
+                                  <i class="fa fa-check"></i> Approved
                                 </a>
                                 <a href="javascript:void(0);" data-bs-toggle="modal"
                                   data-bs-target="#rejectLeave<?php echo $value->emp_leave_id; ?>"
@@ -101,14 +101,18 @@
                         </td>
                         <td><?php echo $k++ ?></td>
                         <td><?php echo $value->user_name ?></td>
-                        <td><?php
+                        <td>
+                          <?php echo $value->leave_type_id  ?>
+                        </td>
+                        <!-- <td><?php
                             if ($value->leave_type == 'Hourly') {
                               echo $value->leave_type . ' - ' . $value->hour_length . ' Hours';
                             } else if ($value->leave_type == 'Full Day') {
                               echo $value->leave_type . ' - ' . date('d-m-Y', strtotime($value->start_date));
                             } else {
                               echo $value->leave_type . ' - ' . date('d-m-Y', strtotime($value->start_date)) . ' to ' . date('d-m-Y', strtotime($value->end_date)) . ' Days';
-                            } ?></td>
+                            } ?>
+                        </td> -->
                         <td><?php echo date('jS \of F Y', strtotime($value->apply_date)); ?></td>
                         <td><?php if (!empty($value->start_date)) {
                               echo date('jS \of F Y', strtotime($value->start_date));
@@ -120,7 +124,16 @@
                               echo '-';
                             } ?>
                         </td>
-                        <td>
+                        <td><?php
+                            if ($value->leave_type == 'Hourly') {
+                              echo $value->leave_type . ' - ' . $value->hour_length . ' Hours';
+                            } else if ($value->leave_type == 'Full Day') {
+                              echo $value->leave_type . ' - ' . date('d-m-Y', strtotime($value->start_date));
+                            } else {
+                              echo $value->leave_type . ' - ' . date('d-m-Y', strtotime($value->start_date)) . ' to ' . date('d-m-Y', strtotime($value->end_date)) . ' Days';
+                            } ?>
+                        </td>
+                        <!-- <td>
                           <?php
                             if ($value->leave_type == 'Hourly') {
                               echo $value->hour_length . ' Hours';
@@ -130,7 +143,7 @@
                               echo '-';
                             } 
                           ?>
-                        </td>
+                        </td> -->
                         <td><?php echo $value->leave_reason ?></td>
                         <td><p><?php echo $value->reject_reason; ?></p></td>
                         <td>
@@ -176,16 +189,24 @@
                                 <div class="col-sm-12 mt-3">
                                   <div class="form-group">
                                     <label>Employee <span class="text-danger">*</span></label>
-                                    <!-- <select class="form-control custom-select selectedEmployeeID" name="emp_id" required>
+
+                                    <?php if($role_id == 1): ?>
+
+                                    <select class="form-control custom-select selectedEmployeeID" name="emp_id" required>
                                       <option value="">Select Here..</option>
+                                      
                                       <?php foreach ($employee as $val): ?>
                                         <option value="<?php echo $val->op_user_id ?>" <?php echo ($val->op_user_id == $value->emp_id) ? 'selected' : ''; ?>>
                                           <?php echo $val->user_name ?>
                                         </option>
                                       <?php endforeach; ?>
-                                    </select> -->
-                                     <input type="text" class="form-control" value="<?php echo htmlspecialchars($logged_in_user_name); ?>" readonly>
-                                      <input type="hidden" name="emp_id" value="<?php echo htmlspecialchars($logged_in_user_id); ?>">
+                                    </select>
+                                    <?php else: ?>
+                                    <input type="text" class="form-control" value="<?php echo htmlspecialchars($logged_in_user_name); ?>" readonly>
+                                    <input type="hidden" name="emp_id" value="<?php echo htmlspecialchars($logged_in_user_id); ?>">
+                                    
+                                    <?php endif; ?>
+
                                   </div>
                                 </div>
 
@@ -286,7 +307,7 @@
                               </div>
                               <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                <button type="submit" class="btn btn-success" id="saveButton">Approve Leave</button>
+                                <button type="submit" class="btn btn-success" id="saveButton">Approved Leave</button>
                               </div>
                             </div>
                           </form>
@@ -382,13 +403,16 @@
           <div class="col-sm-12 mt-3">
             <div class="form-group">
               <label>Employee <span class="text-danger">*</span></label>
+
               <!-- Only Show Dropdown SuperAdmin -->
                
              <?php if ($role_id == 1 ): ?>
   
               <select class="form-control custom-select selectedEmployeeID" name="emp_id" required>
                 <option value="">Select Here..</option>
+                
                 <?php foreach ($employee as $val): ?>
+                  
                 <option value="<?php echo $val->op_user_id ?>" <?php echo ($val->op_user_id == $value->emp_id) ? 'selected' : ''; ?>>
                   <?php echo $val->user_name ?>
                 </option>
@@ -430,13 +454,13 @@
           <div class="col-sm-12 mt-3" id="hourlyFix" style="display:none">
             <div class="form-group">
               <label class="control-label">Date <span class="text-danger">*</span></label>
-              <input type="date" name="start_date" class="form-control mydatetimepickerFull" id="recipient-name1">
+              <input type="date" name="start_date" min="<?= date('Y-m-d'); ?>" class="form-control mydatetimepickerFull" id="recipient-name1">
             </div>
           </div>
           <div class="col-sm-12 mt-3" id="enddate" style="display:none">
             <div class="form-group">
               <label class="control-label">End Date <span class="text-danger">*</span></label>
-              <input type="date" name="end_date" class="form-control mydatetimepickerFull" id="recipient-name1">
+              <input type="date" name="end_date" min="<?= date('Y-m-d'); ?>" class="form-control mydatetimepickerFull" id="recipient-name1">
             </div>
           </div>
           <div class="col-sm-12 mt-3" id="hour_length" style="display:none">
@@ -453,13 +477,15 @@
                 <option value="7">Seven hour</option>
                 <option value="8">Eight hour</option>
               </select>
+
+              <!-- <div class="form-group">
+                <label class="control-label">Date <span class="text-danger">*</span></label>
+                <input type="date" name="start_date" min="<?= date('Y-m-d'); ?>" class="form-control" id="startdateHourly">
+              </div> -->
               
             </div>
                  
-              <div class="form-group">
-                <label class="control-label">Date <span class="text-danger">*</span></label>
-                <input type="date" name="start_date" class="form-control" id="startdateHourly">
-              </div>
+              
           
           </div>
           <div class="col-sm-12 mt-3">

@@ -71,6 +71,7 @@
                       <th>Action</th>
                       <th>Sr. No.</th>
                       <th>Bug Status</th>
+                      <th>Issue Document</th>
                       <th>Project Name</th>
                       <th>Bug Title</th>
                       <th>Bug Description</th>
@@ -131,6 +132,13 @@
                             echo "<span class='badge badge-primary'>In-Testing</span>";
                           }
                           ?>
+                        </td>
+                        <td>
+                            <?php if (!empty($value['bug_issue_document'])): ?>
+                                <a href="<?php echo base_url('uploads/issues/' . $value['bug_issue_document']); ?>" target="_blank">View</a>
+                            <?php else: ?>
+                                N/A
+                            <?php endif; ?>
                         </td>
                         <td><?php echo $value['project_name']; ?></td>
                         <td><?php echo $value['bug_title']; ?></td>
@@ -307,6 +315,15 @@
                 <small class="text-danger" id="bug_descriptionError"></small>
               </div>
             </div>
+
+            <div class="col-sm-12 mt-3">
+              <div class="form-group">
+                <label for="issue_document">Upload Issue Document</label>
+                <input type="file" class="form-control" id="issue_document" name="bug_issue_document" accept="jpg,.jpeg,.png">
+                <small class="text-danger" id="issue_documentError"></small>
+              </div>
+            </div>
+
 
             <!-- Bug Type -->
             <div class="col-sm-12 mt-3">

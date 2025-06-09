@@ -25,12 +25,21 @@
 	$result = $query->result();
 	return $result;
 	}
-    public function emselect(){
-    $sql = "SELECT * FROM `op_user` WHERE role_id = 2 and `status`='1'";
+
+  public function emselect(){
+    $sql = "SELECT * FROM `op_user` WHERE `status`='1'";
     $query=$this->db->query($sql);
   	$result = $query->result();
   	return $result;
-	}
+	} 
+  
+  // public function emselect(){
+  //   $sql = "SELECT * FROM `op_user` WHERE role_id = 2 and `status`='1'";
+  //   $query=$this->db->query($sql);
+  // 	$result = $query->result();
+  // 	return $result;
+	// }
+
     public function emselectByID($emid){
     $sql = "SELECT * FROM `op_user`
       WHERE `op_user_id`='$emid'";

@@ -32,9 +32,7 @@ class Bug extends CI_Controller
     ON user_assign.op_user_id = project_wise_bug.bug_assign_by_id
    left JOIN 
     op_user AS user_to 
-    ON  user_to.op_user_id = project_wise_bug.bug_assign_to_id;
-
-       ";
+    ON  user_to.op_user_id = project_wise_bug.bug_assign_to_id ORDER BY project_wise_bug.bug_id DESC";
 
          $bugreport = $this->model->getSqlData($strQry);
         // print_r($bugreport);die;
@@ -42,77 +40,154 @@ class Bug extends CI_Controller
 
       
         $data['project_list'] = $this->model->getSqlData("SELECT project_id,project_name from project");
-        $data['emp_list'] = $this->model->getSqlData("SELECT op_user_id,user_name from op_user where role_id = '2' ");
+        $data['emp_list'] = $this->model->getSqlData("SELECT op_user_id,user_name from op_user  ");
         $pagename = 'Bug List';
         $data['pagename'] = $pagename;
         $this->model->partialView('admin/bug/bug_list', $data, $pagename);
-    }
-    public function add_bug()
-    {
-        // Retrieve all form data
-        $form_data = $this->input->post();
-        $user_id = $this->session->userdata('op_user_id');
+    }   
+
+    // public function add_bug()
+    // {
+    //     // Retrieve all form data
+    //     $form_data = $this->input->post();
+    //     $user_id = $this->session->userdata('op_user_id');
     
-        // Optionally, you can retrieve individual fields like this:
-        $id = $form_data['id']; // Hidden field ID
-        $bug_project_id = $form_data['bug_project_id']; // Project ID
-        $bug_assign_to_id = $form_data['bug_assign_to_id']; // Developer ID
-        $bug_priority = $form_data['bug_priority']; // Bug Priority
-        $bug_title = $form_data['bug_title']; // Bug Title
-        $bug_description = $form_data['bug_description']; // Bug Description
-        $bug_type = $form_data['bug_type']; // Bug Type
-        $bug_instimate_end_date = $form_data['bug_instimate_end_date']; // Bug Estimated End Date
+    //     // Optionally, you can retrieve individual fields like this:
+    //     $id = $form_data['id']; // Hidden field ID
+    //     $bug_project_id = $form_data['bug_project_id']; // Project ID
+    //     $bug_assign_to_id = $form_data['bug_assign_to_id']; // Developer ID
+    //     $bug_priority = $form_data['bug_priority']; // Bug Priority
+    //     $bug_title = $form_data['bug_title']; // Bug Title
+    //     $bug_description = $form_data['bug_description']; // Bug Description
+    //     $bug_type = $form_data['bug_type']; // Bug Type
+    //     $bug_instimate_end_date = $form_data['bug_instimate_end_date']; // Bug Estimated End Date
     
-        // Validate or process the data
-        // Example: checking if the required fields are empty
-        if (empty($bug_project_id) || empty($bug_assign_to_id) || empty($bug_priority) || empty($bug_title) || empty($bug_description) || empty($bug_type)) {
-            // Handle the error (e.g., set error message or return)
-            $this->session->set_flashdata('error', 'Please fill in all required fields.');
-            redirect('add-bug');
-        }
+    //     // Validate or process the data
+    //     // Example: checking if the required fields are empty
+    //     if (empty($bug_project_id) || empty($bug_assign_to_id) || empty($bug_priority) || empty($bug_title) || empty($bug_description) || empty($bug_type)) {
+    //         // Handle the error (e.g., set error message or return)
+    //         $this->session->set_flashdata('error', 'Please fill in all required fields.');
+    //         redirect('add-bug');
+    //     }
     
-        // Processing the date
-        if (!empty($bug_instimate_end_date)) {
-            $date1 = new DateTime($bug_instimate_end_date, new DateTimeZone('Asia/Kolkata'));
-            // You can do additional date validation here
-        }
+    //     // Processing the date
+    //     if (!empty($bug_instimate_end_date)) {
+    //         $date1 = new DateTime($bug_instimate_end_date, new DateTimeZone('Asia/Kolkata'));
+    //         // You can do additional date validation here
+    //     }
     
-        // If the ID is empty, insert the new bug
-        if (empty($id)) {
-            $data = array(
-                'bug_project_id' => $bug_project_id,
-                'bug_assign_to_id' => $bug_assign_to_id,
-                'bug_priority' => $bug_priority,
-                'bug_assign_by_id' => $user_id,
-                'bug_title' => $bug_title,
-                'bug_description' => $bug_description,
-                'bug_type' => $bug_type,
-                'bug_instimate_end_date' => $bug_instimate_end_date,
-            );
+    //     // If the ID is empty, insert the new bug
+    //     if (empty($id)) {
+    //         $data = array(
+    //             'bug_project_id' => $bug_project_id,
+    //             'bug_assign_to_id' => $bug_assign_to_id,
+    //             'bug_priority' => $bug_priority,
+    //             'bug_assign_by_id' => $user_id,
+    //             'bug_title' => $bug_title,
+    //             'bug_description' => $bug_description,
+    //             'bug_type' => $bug_type,
+    //             'bug_instimate_end_date' => $bug_instimate_end_date,
+    //         );
     
-            // Insert data into the database (assuming a model function called Add_Bug)
-            $this->db->insert('project_wise_bug', $data);
-            $this->session->set_flashdata('success', 'The Bug has been added successfully.');
-        } else {
-            // Update the bug if ID is present
-            $data = array(
-                'bug_project_id' => $bug_project_id,
-                'bug_assign_to_id' => $bug_assign_to_id,
-                'bug_priority' => $bug_priority,
-                'bug_title' => $bug_title,
-                'bug_description' => $bug_description,
-                'bug_type' => $bug_type,
-                'bug_instimate_end_date' => $bug_instimate_end_date,
-            );
+    //         // Insert data into the database (assuming a model function called Add_Bug)
+    //         $this->db->insert('project_wise_bug', $data);
+    //         $this->session->set_flashdata('success', 'The Bug has been added successfully.');
+    //     } else {
+    //         // Update the bug if ID is present
+    //         $data = array(
+    //             'bug_project_id' => $bug_project_id,
+    //             'bug_assign_to_id' => $bug_assign_to_id,
+    //             'bug_priority' => $bug_priority,
+    //             'bug_title' => $bug_title,
+    //             'bug_description' => $bug_description,
+    //             'bug_type' => $bug_type,
+    //             'bug_instimate_end_date' => $bug_instimate_end_date,
+    //         );
             
-            // Update the bug details (assuming a model function called Update_Bug)
-            $this->model->Update_Bug($id, $data);
-            $this->session->set_flashdata('success', 'The Bug details have been updated successfully.');
-        }
+    //         // Update the bug details (assuming a model function called Update_Bug)
+    //         $this->model->Update_Bug($id, $data);
+    //         $this->session->set_flashdata('success', 'The Bug details have been updated successfully.');
+    //     }
     
-        // Redirect to the bug list page or any other page
-        redirect('bug-list');
+    //     // Redirect to the bug list page or any other page
+    //     redirect('bug-list');
+    // }
+    
+    public function add_bug()
+{
+    // Retrieve all form data
+    $form_data = $this->input->post();
+    $user_id = $this->session->userdata('op_user_id');
+
+    $id = $form_data['id'];
+    $bug_project_id = $form_data['bug_project_id'];
+    $bug_assign_to_id = $form_data['bug_assign_to_id'];
+    $bug_priority = $form_data['bug_priority'];
+    $bug_title = $form_data['bug_title'];
+    $bug_description = $form_data['bug_description'];
+    $bug_type = $form_data['bug_type'];
+    $bug_instimate_end_date = $form_data['bug_instimate_end_date'];
+
+    // Validate required fields
+    if (empty($bug_project_id) || empty($bug_assign_to_id) || empty($bug_priority) || empty($bug_title) || empty($bug_description) || empty($bug_type)) {
+        $this->session->set_flashdata('error', 'Please fill in all required fields.');
+        redirect('add-bug');
     }
+
+    // Handle image file upload if selected
+    $file_name = null;
+
+   if (!empty($_FILES['bug_issue_document']['name'])) {
+    $file_tmp_path = $_FILES['bug_issue_document']['tmp_name'];
+    $file_name = time() . '_' . $_FILES['bug_issue_document']['name'];
+    $upload_dir = './uploads/issues/';
+    $dest_path = $upload_dir . $file_name;
+
+    // Ensure directory exists
+    if (!is_dir($upload_dir)) {
+        mkdir($upload_dir, 0755, true);
+    }
+
+    // Move the uploaded file
+    if (move_uploaded_file($file_tmp_path, $dest_path)) {
+        // Success: File moved
+        // $file_name contains filename for DB
+    } else {
+        // Error occurred while moving
+        $this->session->set_flashdata('error', 'Failed to upload file.');
+        redirect('add-bug');
+        return;
+    }
+
+    }
+
+    // Prepare data for DB
+    $data = array(
+        'bug_project_id' => $bug_project_id,
+        'bug_assign_to_id' => $bug_assign_to_id,
+        'bug_priority' => $bug_priority,
+        'bug_title' => $bug_title,
+        'bug_description' => $bug_description,
+        'bug_type' => $bug_type,
+        'bug_instimate_end_date' => $bug_instimate_end_date,
+    );
+
+    if ($file_name !== null) {
+        $data['bug_issue_document'] = $file_name;
+    }
+
+    if (empty($id)) {
+        $data['bug_assign_by_id'] = $user_id;
+        $this->db->insert('project_wise_bug', $data);
+        $this->session->set_flashdata('success', 'The bug has been added successfully.');
+    } else {
+        $this->model->Update_Bug($id, $data);
+        $this->session->set_flashdata('success', 'The bug details have been updated successfully.');
+    }
+
+    redirect('bug-list');
+}
+
     public function get_bug_details()
     {
         if ($this->session->userdata('is_admin_logged_in') != False) {
