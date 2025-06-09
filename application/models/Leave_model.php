@@ -55,15 +55,27 @@
         return $result;
     }
 
-   public function GetLeaveInfoByUser($user_id){
-    $this->db->select('emp_leave.*, op_user.user_name');
+    public function GetLeaveInfoByUser($user_id){
+    $this->db->select('emp_leave.*, op_user.user_name, leave_types.name');
     $this->db->from('emp_leave');
-    $this->db->join('op_user','op_user.op_user_id = emp_leave.emp_id','left');
-    $this->db->where('emp_id', $user_id);
-    $this->db->order_by('emp_leave.leave_added_on', 'DESC'); // 🔄 DESC order by timestamp
+    $this->db->join('op_user', 'op_user.op_user_id = emp_leave.emp_id', 'left');
+    $this->db->join('leave_types', 'leave_types.type_id = emp_leave.leave_type_id', 'left');
+    $this->db->where('emp_leave.emp_id', $user_id);
+    $this->db->order_by('emp_leave.leave_added_on', 'DESC');
     $query = $this->db->get();
     return $query->result();
-}
+    }
+
+
+    // public function GetLeaveInfoByUser($user_id){
+    // $this->db->select('emp_leave.*, op_user.user_name');
+    // $this->db->from('emp_leave');
+    // $this->db->join('op_user','op_user.op_user_id = emp_leave.emp_id','left');
+    // $this->db->where('emp_id', $user_id);
+    // $this->db->order_by('emp_leave.leave_added_on', 'DESC'); // 🔄 DESC order by timestamp
+    // $query = $this->db->get();
+    // return $query->result();
+    // }
 
 
     // public function GetAllLeaveInfo(){

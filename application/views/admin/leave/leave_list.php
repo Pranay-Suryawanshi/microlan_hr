@@ -102,7 +102,7 @@
                         <td><?php echo $k++ ?></td>
                         <td><?php echo $value->user_name ?></td>
                         <td>
-                          <?php echo $value->leave_type_id  ?>
+                          <?php echo $value->leave_type_id ? $value->name: "N/A";  ?>
                         </td>
                         <!-- <td><?php
                             if ($value->leave_type == 'Hourly') {

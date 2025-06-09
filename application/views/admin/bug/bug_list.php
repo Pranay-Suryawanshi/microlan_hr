@@ -58,7 +58,7 @@
         <div class="card-body">
           <div class="row">
             <div class="col-sm-12">
-              <button type="btn" class="btn btn-primary" data-bs-toggle="modal"
+              <button type="btn" class="btn btn-primary" onclick="openBugModal('add')" data-bs-toggle="modal"
                 data-bs-target="#exampleVerticallycenteredModal">
                 <i class="fa fa-plus"></i> Add New Bug </button>
 
@@ -92,7 +92,7 @@
                       <tr>
                         <td>
                           <div class="dropdown">
-                            <button class="dropbtn">
+                            <button class="dropbtn" onclick="openBugModal('edit')">
                               <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
                             </button>
                             <div class="dropdown-content">
@@ -316,13 +316,25 @@
               </div>
             </div>
 
-            <div class="col-sm-12 mt-3">
-              <div class="form-group">
-                <label for="issue_document">Upload Issue Document</label>
-                <input type="file" class="form-control" id="issue_document" name="bug_issue_document" accept="jpg,.jpeg,.png">
-                <small class="text-danger" id="issue_documentError"></small>
+           <!-- Upload Issue Document (Add Mode) -->
+            <div class="col-sm-12 mt-3" id="uploadIssueDiv" style="display: none;">
+               <div class="form-group">
+                <label for="upload_issue_document">Upload Issue Document</label>
+                <input type="file" class="form-control" id="upload_issue_document" name="bug_issue_document" accept=".jpg,.jpeg,.png,.pdf">
+                <small class="text-danger" id="upload_issue_documentError"></small>
               </div>
             </div>
+
+            <!-- Solution Issue Document (Edit Mode) -->
+            <div class="col-sm-12 mt-3" id="solutionIssueDiv" style="display: block;">
+              <div class="form-group">
+                <label for="solution_issue_document">Solution Issue Document</label>
+                <input type="file" class="form-control" id="solution_issue_document" name="bug_solution_document" accept=".jpg,.jpeg,.png,.pdf">
+                <small class="text-danger" id="solution_issue_documentError"></small>
+              </div>
+            </div>
+
+
 
 
             <!-- Bug Type -->
@@ -586,3 +598,24 @@
 });
 
 </script>
+<script>
+  function openBugModal(mode) {
+    
+    document.getElementById('uploadIssueDiv').style.display = 'none';
+    document.getElementById('solutionIssueDiv').style.display = 'none';
+
+    if (mode === 'add') {
+      document.getElementById('uploadIssueDiv').style.display = 'block';
+      document.querySelector('.modal-title').innerText = 'Add Bug';
+    } 
+    else if (mode === 'edit') {
+      document.getElementById('solutionIssueDiv').style.display = 'block';
+      document.querySelector('.modal-title').innerText = 'Edit Bug';
+    }
+
+    
+    var modal = new bootstrap.Modal(document.getElementById('exampleVerticallycenteredModal'));
+    modal.show();
+  }
+</script>
+

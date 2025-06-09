@@ -136,10 +136,29 @@ class Bug extends CI_Controller
 
     // Handle image file upload if selected
     $file_name = null;
-
-   if (!empty($_FILES['bug_issue_document']['name'])) {
+// Upload Issue Document (Add Mode)
+if (!empty($_FILES['bug_issue_document']['name'])) {
     $file_tmp_path = $_FILES['bug_issue_document']['tmp_name'];
     $file_name = time() . '_' . $_FILES['bug_issue_document']['name'];
+    $upload_dir = './uploads/issues/';
+    $dest_path = $upload_dir . $file_name;
+
+    if (!is_dir($upload_dir)) {
+        mkdir($upload_dir, 0755, true);
+    }
+
+    if (move_uploaded_file($file_tmp_path, $dest_path)) {
+        $data['bug_issue_document'] = $file_name;
+    } else {
+        $this->session->set_flashdata('error', 'Issue document upload failed.');
+        redirect('add-bug');
+        return;
+    }
+}
+
+   if (!empty($_FILES['bug_solution_document']['name'])) {
+    $file_tmp_path = $_FILES['bug_solution_document']['tmp_name'];
+    $file_name = time() . '_' . $_FILES['bug_solution_document']['name'];
     $upload_dir = './uploads/issues/';
     $dest_path = $upload_dir . $file_name;
 
@@ -155,7 +174,7 @@ class Bug extends CI_Controller
     } else {
         // Error occurred while moving
         $this->session->set_flashdata('error', 'Failed to upload file.');
-        redirect('add-bug');
+        redirect('bug-list');
         return;
     }
 
@@ -187,6 +206,8 @@ class Bug extends CI_Controller
 
     redirect('bug-list');
 }
+
+
 
     public function get_bug_details()
     {
